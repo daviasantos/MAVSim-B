@@ -19,7 +19,7 @@ classdef CSocket
         m_in           % message coming from outside
         m_out          % message to send
         nele           % maximum number of elements to read
-        
+        border         % byteOrder property of handle
         
     end
     
@@ -31,11 +31,13 @@ classdef CSocket
         
         function obj = CSocket ( sSocket )
             
-            obj.ip   = sSocket.ip;
-            obj.port = sSocket.port;
-            obj.tout = sSocket.tout;
-            obj.role = sSocket.role;
-            obj.nele = sSocket.nele;
+            obj.ip     = sSocket.ip;
+            obj.port   = sSocket.port;
+            obj.tout   = sSocket.tout;
+            obj.role   = sSocket.role;
+            obj.nele   = sSocket.nele;
+            obj.border = sSocket.border;
+            
             
         end
         
@@ -51,6 +53,7 @@ classdef CSocket
             
             fopen( obj.handle ); 
             
+            obj.handle.byteOrder = obj.border;
                 
         end
         
@@ -68,7 +71,7 @@ classdef CSocket
         
         function swrite( obj )
         
-            fwrite( obj.handle, obj.m_out );
+            fwrite( obj.handle, obj.m_out,'single' );
   
         end
         

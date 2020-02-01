@@ -16,6 +16,7 @@ ip_unity   = '127.0.0.1';
 port_unity = 55001;
 tout_unity = 10;
 role_unity = 'client';
+byteorder_unity = 'littleEndian';
 nele_unity = 10;
 
 
@@ -107,7 +108,7 @@ rhor  = 0.2;
 rhop  = 5*pi/180;
 dtl   = [0 0 10 0];
 Ts    = 0.01;
-tf    = 80;
+tf    = inf;
 
 % Navigation algorithm %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

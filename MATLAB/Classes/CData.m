@@ -236,7 +236,7 @@ classdef CData
         
         function obj = PackUnity ( obj )
 
-            
+            obj.m_out_unity = single([obj.r' obj.a' obj.power]);
             
 
         end
@@ -244,13 +244,13 @@ classdef CData
 
         %% Unpack data received from Unity
         
-        function obj = UnpackUnity ( obj )
-
-            
-            
-
-        end
-        
+%         function obj = UnpackUnity ( obj )
+% 
+%             
+%             
+% 
+%         end
+%         
         
         
             

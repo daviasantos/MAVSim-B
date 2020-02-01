@@ -33,11 +33,12 @@ Parameters;
 
 % Object: TCP socket with unity computer %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-sSocket_unity.ip   = ip_unity;
-sSocket_unity.port = port_unity;
-sSocket_unity.tout = tout_unity;
-sSocket_unity.role = role_unity;
-sSocket_unity.nele = nele_unity;
+sSocket_unity.ip     = ip_unity;
+sSocket_unity.port   = port_unity;
+sSocket_unity.tout   = tout_unity;
+sSocket_unity.role   = role_unity;
+sSocket_unity.nele   = nele_unity;
+sSocket_unity.border = byteorder_unity;
 
 oSocket_unity    = CSocket( sSocket_unity );
 
@@ -200,7 +201,9 @@ sNavigation.P0  = P0;
             
 oNavigation = CNavigation( sNavigation );
 
+% Data manipulation
 
+oData = CData( nr );
 
 
 
@@ -224,7 +227,6 @@ disp(' ');
 disp('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
 disp('Author: Prof Dr Davi A. Santos');
 disp('Institution: Aeronautics Institute of Technology (ITA/Brazil)');
-disp('Last modification: January 29th, 2020');
 disp('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
 disp(' ');
 
