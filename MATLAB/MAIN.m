@@ -297,15 +297,39 @@ while( 1 )
     
     %% State machine
     
-    if oJoy.b(3) && oJoy.b(4), oState.event = oState.TURN_OFF; end
+    % turn off command
+    
+    if oJoy.b(1) && oJoy.b(2), oState.event = oState.TURN_OFF; end
+    
+    % arm command
+    
     if oJoy.a(2) == 1 && oJoy.a(4) == -1, oState.event = oState.ARM_CMD; end 
-    if oJoy.b(5), oState.event = oState.TAKEOFF_CMD; end
+    
+    % disarm command
+    
+    if oJoy.a(2) == -1 && oJoy.a(4) == 1, oState.event = oState.DISARM_CMD; end 
+
+    % take off command
+    
+    if oJoy.b(3), oState.event = oState.TAKEOFF_CMD; end
+    
+    % land command
+    
+    if oJoy.b(4), oState.event = oState.LAND_CMD; end
+    
+    % waypoint command
+    
+    if oJoy.b(5), oState.event = oState.WAYPOINT_CMD; end
+    
+    % end of states (events)
+    
     if oState.dt == 3 && oState.state == TAKEOFF, oState.event = oState.TAKEOFF_END; end    
-    if oJoy.b(6), oState.event = oState.LAND_CMD; end
+    
     if oState.dt == 5 && oState.state == LANDING, oState.event = oState.LAND_END; end
-    if oJoy.b(7), oState.event = oState.WAYPOINT_CMD; end
+    
     if norm(oJoy.a) > 0.1, oState.event = oState.WAYPOINT_END; end
     
+       
     oState = StateTransition( oState );
     oState = StateTime( oState, Ts );
     

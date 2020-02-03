@@ -197,14 +197,21 @@ classdef CControl
         
         function obj = ATCman( obj )
             
+            % Convert from normal vector to phi-theta
+            
+            phi1   = -atan(obj.nG_(2)/obj.nG_(3));
+            theta1 =  asin(obj.nG_(1));
+            
             % Convert joystick commands into attitude command
             
-            phi   = -obj.cay;
-            theta =  obj.cax;
+            phi2   = -obj.cay;
+            theta2 =  obj.cax;
             psi   =  obj.p_;  
             
             % Conversion to attitude matrix considering psi_ 
             
+            phi   = phi1 + phi2;
+            theta = theta1 + theta2;
             
             obj.D_ = a2D([phi theta psi]);
 

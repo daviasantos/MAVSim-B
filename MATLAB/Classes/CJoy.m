@@ -52,10 +52,10 @@ classdef CJoy
         
         function obj = jread( obj )
         
-            % read axes 1-4 and buttons 5/6,... 
+            % read axes 1-4 and buttons 1-8,... 
     
             obj.a = axis( obj.handle,[1 2 3 4] );
-            obj.b = button( obj.handle, [7 8 1 2 3 4 5] ); 
+            obj.b = button( obj.handle, [1 2 3 4 5 6 7 8] ); 
         
        
         end
@@ -70,7 +70,7 @@ classdef CJoy
             obj.vx = -obj.vxmax*obj.a(4);                     
             obj.vy = -obj.vymax*obj.a(3);                     
             obj.vz = -obj.vzmax*obj.a(2);                    
-            obj.wz = -obj.wzmax*obj.b(2)+obj.wzmax*obj.b(1);  % in deg/s
+            obj.wz = -obj.wzmax*obj.b(7)+obj.wzmax*obj.b(8);  % in deg/s
        
         
             % implement a dead zone
