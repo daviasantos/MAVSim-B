@@ -46,6 +46,8 @@ classdef CControl
         p_               % heading command 
         wz_              % heading rate command 
         w_               % speed commands
+        cax              % accel command in x (joystick)
+        cay              % accel command in y (joystick)
 
 
         % Internal variable
@@ -157,8 +159,7 @@ classdef CControl
         %% Attitude control
         
         function obj = AC( obj )
-            
-           
+
             % Attitude error
             
             obj.ea = D2a( obj.D_*obj.D' );
@@ -182,12 +183,30 @@ classdef CControl
             
             phi   = -atan(obj.nG_(2)/obj.nG_(3));
             theta =  asin(obj.nG_(1));
+            psi   =  obj.p_;
             
+            % Conversion to attitude matrix considering psi_      
+            
+            obj.D_ = a2D([phi theta psi]);
+
+            
+        end
+        
+        
+        %% Attitude command computation for MANUAL state
+        
+        function obj = ATCman( obj )
+            
+            % Convert joystick commands into attitude command
+            
+            phi   = -obj.cay;
+            theta =  obj.cax;
+            psi   =  obj.p_;  
             
             % Conversion to attitude matrix considering psi_ 
             
             
-            obj.D_ = a2D([phi theta obj.p_]);
+            obj.D_ = a2D([phi theta psi]);
 
             
         end

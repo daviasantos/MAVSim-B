@@ -1,9 +1,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% CMAV
+% CMav
 % Description: MAV physics class. It implements the physics of the MAV under
 % consideration. It uses RK4 to integrate the equations of motion. 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Author:              Prof Dr Davi A Santos (ITA)
+% Author:  Prof Dr Davi A Santos (ITA)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 classdef CMav
@@ -197,6 +197,20 @@ classdef CMav
                 
             end
             
+            
+        end
+        
+        
+        %% Just rotor dynamics
+        
+        function obj = rotors ( obj )
+            
+            for i=1:obj.nr
+                
+                obj.w(i) = exp(-obj.h/obj.Tm)*(obj.w(i)-obj.km*obj.w_(i))... 
+                             + obj.km*obj.w_(i);
+            
+            end
             
         end
         

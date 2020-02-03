@@ -3,7 +3,7 @@
 % Description: sensor platform class. It computes the sensor measurements
 % from the system true states.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Author:              Prof Dr Davi A Santos (ITA)
+% Author:  Prof Dr Davi A Santos (ITA)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 

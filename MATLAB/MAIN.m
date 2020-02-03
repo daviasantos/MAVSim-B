@@ -1,5 +1,5 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% MAVSim: Simulation of an MAV dynamics & flight control 
+% MATLABMAVSim: Simulation of an MAV dynamics & flight control 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Description: pure matlab simulation. This version has a simple navigation
 % algorithm (attitude determ. filter using mag, gyro, and acc + GPS). Here
@@ -23,7 +23,7 @@ close all
 
 tstart = tic;
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 %% Parameters
 
 % Input parameters
@@ -31,7 +31,7 @@ tstart = tic;
 Parameters;
 
 
-% Object: TCP socket with unity computer %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Object: TCP socket with unity computer 
 
 sSocket_unity.ip     = ip_unity;
 sSocket_unity.port   = port_unity;
@@ -42,7 +42,7 @@ sSocket_unity.border = byteorder_unity;
 
 oSocket_unity    = CSocket( sSocket_unity );
 
-% MAV %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% MAV 
 
 sMav.nr   = nr;
 sMav.kf   = kf;
@@ -70,7 +70,7 @@ oMav = CMav( sMav );
 
 
 
-% Disturbance/Uncertainty %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Disturbance/Uncertainty 
 
 
 sUncer.alpha_f = alpha_f;
@@ -81,7 +81,7 @@ oUncer = CUncer( sUncer );
 
 
 
-% Sensor platform %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Sensor platform 
 
 
 sSensors.ba  = ba0;
@@ -107,9 +107,7 @@ sSensors.yrp = zeros(3,1);
 oSensors = CSensors( sSensors );
 
 
-
-
-% Joystick %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Joystick 
 
 sJoy.vxmax = vxmax;
 sJoy.vymax = vymax;
@@ -119,9 +117,7 @@ sJoy.wzmax = wzmax;
 oJoy = CJoy( sJoy );
 
 
-
-
-% Flight Control %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Flight Control
 
 sControl.K1      = K1;
 sControl.K2      = K2;
@@ -153,13 +149,7 @@ sControl.w_      = zeros(nr,1);
 oControl = CControl( sControl );
 
 
-
-
-
-
-
-% Trajectory planning/guidance %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+% Trajectory planning/guidance 
 
 sGuidance.wl    = wl;
 sGuidance.Kpr   = Kpr;
@@ -184,8 +174,6 @@ sGuidance.flag  = 0;
 oGuidance = CGuidance( sGuidance );
 
 
-
-
 % Navigation algorithm
 
 sNavigation.tau = tau;
@@ -201,19 +189,22 @@ sNavigation.P0  = P0;
             
 oNavigation = CNavigation( sNavigation );
 
+
 % Data manipulation
 
 oData = CData( nr );
 
 
+% State machine 
 
+oState = CState;
 
 
 
 %% Initial interface
 
 disp('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
-disp('MAVSim: SIMULATION OF AN MAV - DYNAMICS AND FLIGHT CONTROL');
+disp('MATLABMAVSim: SIMULATION OF AN MAV - DYNAMICS AND FLIGHT CONTROL');
 disp(' ');
 disp('Description: Pure MATLAB simulation including:'); 
 disp(' ');
@@ -231,21 +222,14 @@ disp('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
 disp(' ');
 
 
-%% Mode selection
-
-
-mode = -1;
-while (mode ~= 0 && mode ~= 1)
-    mode = input('Enter the desired flight mode ( 0 - manual; 1 - auto ): ');
-    disp(' ');
-    if mode == 1
-        disp('Autonomous mode selected ...');
-    elseif mode == 0
-        disp('Joystick mode selected ...');
-    end
-end
+input('Press ENTER to start...');
 disp(' ');
 
+
+% State: INIT
+
+state.event = state.TURN_ON;
+state = StateTransition( state );
 
 
 %% Connections
@@ -261,9 +245,6 @@ oSocket_unity = InitSocket( oSocket_unity );
 
 
 %% Calibration
-
-disp('Calibration...');
-disp(' ');
 
 
 for k = 1:kfcalib 
@@ -296,40 +277,70 @@ for k = 1:kfcalib
 end
 
 
+
+% State: READY
+
+state.event = state.INIT_END;
+state = StateTransition( state );
+
+
 %% Discrete-time loop
 
-disp('Simulation loop running...');
-disp(' ');
-
-
-% Initialize time index
+% Initialize time index for plotting
 
 k = 1;  
-
 
 while( 1 )
     
     t1 = tic;
     
-    %% Compute commands (manual mode) - joystick
     
-    if ~mode 
+    %% State machine
+    
+    if oJoy.b(3) && oJoy.b(4), oState.event = oState.TURN_OFF; end
+    if oJoy.a(2) == 1 && oJoy.a(4) == -1, oState.event = oState.ARM_CMD; end 
+    if oJoy.b(5), oState.event = oState.TAKEOFF_CMD; end
+    if oState.dt == 3 && oState.state == TAKEOFF, oState.event = oState.TAKEOFF_END; end    
+    if oJoy.b(6), oState.event = oState.LAND_CMD; end
+    if oState.dt == 5 && oState.state == LANDING, oState.event = oState.LAND_END; end
+    if oJoy.b(7), oState.event = oState.WAYPOINT_CMD; end
+    if norm(oJoy.a) > 0.1, oState.event = oState.WAYPOINT_END; end
+    
+    oState = StateTransition( oState );
+    oState = StateTime( oState, Ts );
+    
+    if oState.state == oState.OFF
+        
+        break;
+    
+    end
+    
+    
+    %% Compute commands
+    
+    % State: MANUAL
+    
+    if oState.state == oState.MANUAL 
         
         oJoy = jread( oJoy );
         oJoy = jcommand( oJoy );
         
-        oControl.v_   = [oJoy.vx,oJoy.vy,oJoy.vz]';
+        % Commands to the flight controllers 
+        
+        oControl.v_   =  [0,0,oJoy.vz]'; 
+        oControl.cax  =  oJoy.vx;
+        oControl.cay  =  oJoy.vy; 
         oControl.wz_  =  oJoy.wz;
-        
-        oControl.r_   =  oControl.r_ + oControl.v_*Ts;
+        oControl.r_   =  zeros(3,1);
         oControl.p_   =  oControl.p_ + oControl.wz_*Ts;
-      
-    else 
         
+    end
         
-        
-    %% Compute commands (auto mode) - Guidance
+     
+    % State: WAYPOINT
 
+    if oState.state == oState.WAYPOINT
+        
         % input measurement
 
         oGuidance.r  = oNavigation.x(1:3); 
@@ -351,24 +362,44 @@ while( 1 )
 
         oGuidance = plaw( oGuidance );
 
-      
-        % Commands for flight control 
+        
+        % Commands to the flight controllers 
         
         oControl.r_    = oGuidance.r_;
         oControl.v_    = oGuidance.v_;
         oControl.p_    = oGuidance.p_; 
         oControl.wz_   = oGuidance.wz_;
-    
         
-    end 
+    end  
     
     
+    % State: TAKEOFF
+    
+    if oState.state == oState.TAKEOFF
+         
+        oControl.r_(3) = htakeoff;
+        oControl.v_    = zeros(3,1);
+        oControl.wz_   = 0;
+        
+        
+    end
+    
+    % State: LANDING
+    
+    if oState.state == oState.LANDING
+         
+        oControl.r_(3) = 0;
+        oControl.v_    = zeros(3,1);
+        oControl.wz_   = 0;
+    
+    end
     
  
+    
     %% Flight control
     
     
-    % input variables 
+    % Feedback variables 
     
     oControl.r     = oNavigation.x(1:3); 
     oControl.v     = oNavigation.x(4:6); 
@@ -376,17 +407,38 @@ while( 1 )
     oControl.W     = oSensors.yg - oNavigation.x(14:16);   
     
     
-    % Position or velocity control law
+    % Position control law
 
-    if mode
+    if oState.state == oState.TAKEOFF || ...
+       oState.state == oState.LANDING || ...
+       oState.state == oState.WAYPOINT 
+        
         oControl = PC( oControl );
-    else
+    
+    
+    % Velocity control law
+    
+    elseif oState.state == oState.MANUAL
+        
         oControl = VC( oControl );
+    
     end
     
+ 
     % Attitude command computation
     
-    oControl = ATC( oControl );
+    if oState.state == oState.TAKEOFF || ...
+       oState.state == oState.LANDING || ...
+       oState.state == oState.WAYPOINT 
+        
+        oControl = ATC( oControl );
+    
+    elseif oState.state == oState.MANUAL
+    
+        oControl = ATCman( oControl );
+    
+    end
+    
     
     % Attitude control law
     
@@ -398,25 +450,66 @@ while( 1 )
     
     
     
-    %% Environment, plant, and sensor platform simulation
+    %% Environment and plant simulation
     
-    % Disturbances
+    % State: ARMED
     
-    oUncer  = disturbances( oUncer );
+    if oState.state == oState.ARMED
+        
+        oMav.r  = oMav.r;
+        oMav.D  = oMav.D;
+        oMav.v  = zeros(3,1);
+        oMav.vp = zeros(3,1);  
+        oMav.W  = zeros(3,1);
+        oMav.w_ = 0.10*wmax*ones(nr,1);
+       
+        oMav = rotors( oMav );
+     
+    end
     
     
-    % Equations of motion
+    % State: READY
     
-    oMav.Fd = oUncer.Fd;
-    oMav.Td = oUncer.Td;
-    oMav.w_ = oControl.w_;
+    if oState.state == oState.READY
+        
+        oMav.r   = oMav.r;
+        oMav.D   = oMav.D;
+        oMav.v   = zeros(3,1);
+        oMav.vp  = zeros(3,1);  
+        oMav.W   = zeros(3,1);
+        oMav.w_  = zeros(nr,1);
+       
+        oMav = rotors( oMav );
+      
+    end
     
-    oMav = propeller( oMav );
-    oMav = efforts  ( oMav );
-    oMav = dynamics ( oMav );
+    
+    % State: TAKEOFF/LANDING/MANUAL/WAYPOINT
+    
+    if oState.state == oState.TAKEOFF || ...
+       oState.state == oState.LANDING || ...
+       oState.state == oState.MANUAL  || ...        
+       oState.state == oState.WAYPOINT 
+   
+        % Disturbances
+    
+        oUncer  = disturbances( oUncer );
     
     
-    % Sensor platform
+        % Equations of motion
+    
+        oMav.Fd = oUncer.Fd;
+        oMav.Td = oUncer.Td;
+        oMav.w_ = oControl.w_;
+    
+        oMav = propeller( oMav );
+        oMav = efforts  ( oMav );
+        oMav = dynamics ( oMav );
+    
+    end
+    
+    
+    %% Sensor platform simulation
     
     oSensors.vp = oMav.vp;
     oSensors.W  = oMav.W;
@@ -447,9 +540,15 @@ while( 1 )
     
     oData.r = oMav.r;
     oData.a = 180/pi*D2a( oMav.D );
-    oData.power = 1;
     
-    % Pack and write data to Unity
+    if oState.state == oState.READY
+        oData.power = 0; 
+    else
+        oData.power = 1;
+    end
+    
+    
+    % Pack and write data to Unity 3D
     
     oData               = PackUnity( oData );
     oSocket_unity.m_out = oData.m_out_unity;
@@ -483,14 +582,11 @@ while( 1 )
     TBd(:,k)  = oControl.TB_;
     
     
-    %% Waiting for sampling instant (manual mode)
+    %% Waiting for sampling instant
     
     t2 = toc(t1);
-    
-    if ~mode
-        dt = uint64(1000*(Ts-t2)); 
-        java.lang.Thread.sleep(dt);
-    end
+    dt = uint64(1000*(Ts-t2)); 
+    java.lang.Thread.sleep(dt);
     
     
     %% Update time index (just for plotting)

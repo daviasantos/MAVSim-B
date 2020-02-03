@@ -6,7 +6,7 @@
 % estimated by numerical derivative of position and LP filter.
 % => State vector: (r,v,q,ba,bg).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Author:              Prof Dr Davi A Santos (ITA)
+% Author: Prof Dr Davi A Santos (ITA)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 classdef CNavigation

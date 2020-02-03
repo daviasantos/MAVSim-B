@@ -3,7 +3,7 @@
 % Description: Uncertainty generation class. It computes the disturbance
 % torque and force.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Author:              Prof Dr Davi A Santos (ITA)
+% Author: Prof Dr Davi A Santos (ITA)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 

@@ -3,7 +3,7 @@
 % Description: Joystick class. It opens, read and generate control commands 
 % from the joystick. It considers a IPEGA PG 9076
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Author:              Prof Dr Davi A Santos (ITA)
+% Author: Prof Dr Davi A Santos (ITA)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 classdef CJoy
@@ -52,10 +52,10 @@ classdef CJoy
         
         function obj = jread( obj )
         
-            % read axes 1-4 and buttons 5/6
+            % read axes 1-4 and buttons 5/6,... 
     
             obj.a = axis( obj.handle,[1 2 3 4] );
-            obj.b = button( obj.handle, [7 8] ); 
+            obj.b = button( obj.handle, [7 8 1 2 3 4 5] ); 
         
        
         end
@@ -67,9 +67,9 @@ classdef CJoy
         
             % compute commands
     
-            obj.vx = -obj.vxmax*obj.a(4);                     % in m/s
-            obj.vy = -obj.vymax*obj.a(3);                     % in m/s
-            obj.vz = -obj.vzmax*obj.a(2);                     % in m/s
+            obj.vx = -obj.vxmax*obj.a(4);                     
+            obj.vy = -obj.vymax*obj.a(3);                     
+            obj.vz = -obj.vzmax*obj.a(2);                    
             obj.wz = -obj.wzmax*obj.b(2)+obj.wzmax*obj.b(1);  % in deg/s
        
         

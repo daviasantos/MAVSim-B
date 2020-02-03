@@ -1,5 +1,5 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% MAVSim - Simulation parameters
+% MATLABMAVSim - Simulation parameters
 % Description: It contains all the parameters of the simulation.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Author: Prof Dr Davi A. Santos (ITA)
@@ -68,9 +68,9 @@ bm0 = [0.001 0.001 0.001]';
 
 % Joystick %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-vxmax = 0.5;       % in m/s
-vymax = 0.5;       % in m/s
-vzmax = 0.5;       % in m/s
+vxmax = 0.5;       
+vymax = 0.5;       
+vzmax = 0.5;       
 wzmax = 0.1;       % in deg/s
 
 
@@ -109,6 +109,11 @@ rhop  = 5*pi/180;
 dtl   = [0 0 10 0];
 Ts    = 0.01;
 tf    = inf;
+
+% Auto take-off
+
+htakeoff = 1;
+
 
 % Navigation algorithm %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
