@@ -54,8 +54,8 @@ classdef CJoy
         
             % read axes 1-4 and buttons 1-8,... 
     
-            obj.a = axis( obj.handle,[1 2 3 4] );
-            obj.b = button( obj.handle, [1 2 3 4 5 6 7 8] ); 
+            obj.a = axis( obj.handle );
+            obj.b = button( obj.handle ); 
         
        
         end

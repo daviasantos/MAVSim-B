@@ -77,6 +77,8 @@ classdef CState
                         
                         obj.state = obj.READY;
                        
+                        obj.dt = 0;
+                        
                         disp('Ready...');
                         disp(' ');
                         
@@ -88,6 +90,8 @@ classdef CState
                         
                         obj.state = obj.OFF;
                         
+                        obj.dt = 0;
+                        
                         disp('Off.');
                         disp(' ');
                         
@@ -95,6 +99,8 @@ classdef CState
                     elseif obj.event == obj.ARM_CMD
                         
                         obj.state = obj.ARMED;
+                        
+                        obj.dt = 0;
                         
                         disp('Armed...');
                         disp(' ');
@@ -107,6 +113,8 @@ classdef CState
                         
                         obj.state = obj.READY;
                         
+                        obj.dt = 0;
+                        
                         disp('Ready...');
                         disp(' ');
                         
@@ -114,6 +122,8 @@ classdef CState
                     elseif obj.event == obj.TAKEOFF_CMD
                         
                         obj.state = obj.TAKEOFF;
+                        
+                        obj.dt = 0;
                         
                         disp('Auto take off...');
                         disp(' ');
@@ -127,6 +137,8 @@ classdef CState
                         
                         obj.state = obj.MANUAL;
                         
+                        obj.dt = 0;
+                        
                         disp('Manual...');
                         disp(' ');
                         
@@ -137,7 +149,9 @@ classdef CState
                     if obj.event == obj.LAND_CMD
                         
                         obj.state = obj.LANDING;
-                          
+                        
+                        obj.dt = 0;
+                        
                         disp('Auto landing...');
                         disp(' ');
                         
@@ -145,6 +159,8 @@ classdef CState
                     elseif obj.event == obj.WAYPOINT_CMD
                         
                         obj.state = obj.WAYPOINT;
+                        
+                        obj.dt = 0;
                         
                         disp('Auto waypoint-based guidance...');
                         disp(' ');
@@ -157,7 +173,9 @@ classdef CState
                     if obj.event == obj.WAYPOINT_END
                         
                         obj.state = obj.MANUAL;
-                          
+                        
+                        obj.dt = 0;
+                        
                         disp('Manual...');
                         disp(' ');
                         
@@ -168,7 +186,9 @@ classdef CState
                     if obj.event == obj.LAND_END
                         
                         obj.state = obj.ARMED;
-                          
+                        
+                        obj.dt = 0;
+                        
                         disp('Armed...');
                         disp(' ');
                         

@@ -34,7 +34,10 @@ classdef CControl
         Fmax            % maximum force
         zetamin         % minimum virtual thrust
         zetamax         % maximum virtual thrust
-
+        tau             % time const ref filter v_
+        Ts              % sampling time
+        alpha           % coeff ref filter v_
+        
         % External variables
         
         r                % position 
@@ -42,7 +45,8 @@ classdef CControl
         D                % attitude matrix 
         W                % angular velocity 
         r_               % position command 
-        v_               % velocity command 
+        v_               % velocity command
+        vcheck           % output of ref filter of v_
         p_               % heading command 
         wz_              % heading rate command 
         w_               % speed commands
@@ -101,6 +105,15 @@ classdef CControl
             obj.p_      = sControl.p_;
             obj.wz_     = sControl.wz_;
             obj.w_      = sControl.w_;
+            obj.D_      = sControl.D_;
+            obj.tau     = sControl.tau;
+            obj.Ts      = sControl.Ts;
+            
+            obj.F_ = 0;
+            obj.nG_ = [0;0;1];
+            obj.TB_ = zeros(3,1);
+            obj.FG_ = zeros(3,1);
+            obj.vcheck = zeros(3,1);
             
             
             % Pre-computation
@@ -111,6 +124,8 @@ classdef CControl
                               1 -1/obj.l2 -1/obj.l1 -1/obj.k;
                               1 -1/obj.l2 1/obj.l1 1/obj.k;
                               1 1/obj.l2 1/obj.l1 -1/obj.k];
+            
+            obj.alpha = exp( -obj.Ts/obj.tau );
             
             
             
@@ -142,9 +157,13 @@ classdef CControl
         
         function obj = VC( obj )
    
+            % Reference filter
+            
+            obj.vcheck = obj.alpha*obj.vcheck + (1-obj.alpha)*obj.v_;
+            
             % Control law ifself
             
-            obj.FG_ = obj.m*( obj.g*obj.e3 + obj.Kc*(obj.v_-obj.v) );
+            obj.FG_ = obj.m*( obj.g*obj.e3 + obj.Kc*(obj.vcheck-obj.v) );
             obj.FG_ = sat( obj.FG_, obj.Fmin, obj.Fmax );
            
             
@@ -210,8 +229,8 @@ classdef CControl
             
             % Conversion to attitude matrix considering psi_ 
             
-            phi   = phi1 + phi2;
-            theta = theta1 + theta2;
+            phi   = 0*phi1 + phi2;
+            theta = 0*theta1 + theta2;
             
             obj.D_ = a2D([phi theta psi]);
 

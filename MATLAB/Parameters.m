@@ -68,19 +68,21 @@ bm0 = [0.001 0.001 0.001]';
 
 % Joystick %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-vxmax = 0.5;       
-vymax = 0.5;       
-vzmax = 0.5;       
-wzmax = 0.1;       % in deg/s
+vxmax = 5.0;       
+vymax = 5.0;       
+vzmax = 5.0;       
+wzmax = 5.0;       % in deg/s
 
 
-% Position control law %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Position/velocity control law %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 K3     = 0.3*eye(3);        
 K4     = 1.0*eye(3);         
 Kc     = diag([1.5,1.5,3]);
 Fmin   = [-5.66;-5.66;0.98];
 Fmax   = [5.66;5.66;19.62];
+tau_ref_filter_v_ = 2;
+
 
 
 % Attitude control law %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -104,15 +106,16 @@ Kpr   = diag([0.05 0.05 0]);
 Kpp   = 0;
 Kdr   = diag([0.05 0.05 0]);  
 Kdp   = 0;
-rhor  = 0.2;
+rhor  = 0.5;
 rhop  = 5*pi/180;
-dtl   = [0 0 10 0];
+dtl   = [0 0 0 0];
 Ts    = 0.01;
 tf    = inf;
 
 % Auto take-off
 
 htakeoff = 1;
+
 
 
 % Navigation algorithm %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

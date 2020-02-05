@@ -145,6 +145,9 @@ sControl.v_      = zeros(3,1);
 sControl.p_      = 0;
 sControl.wz_     = 0;
 sControl.w_      = zeros(nr,1);
+sControl.D_      = eye(3);
+sControl.tau     = tau_ref_filter_v_;
+sControl.Ts      = Ts;
 
 oControl = CControl( sControl );
 
@@ -228,8 +231,8 @@ disp(' ');
 
 % State: INIT
 
-state.event = state.TURN_ON;
-state = StateTransition( state );
+oState.event = oState.TURN_ON;
+oState = StateTransition( oState );
 
 
 %% Connections
@@ -237,7 +240,6 @@ state = StateTransition( state );
 % Create joystick handle
 
 oJoy = jopen( oJoy );
-
 
 % Unity TCP socket setup and initialization
 
@@ -280,8 +282,8 @@ end
 
 % State: READY
 
-state.event = state.INIT_END;
-state = StateTransition( state );
+oState.event = oState.INIT_END;
+oState = StateTransition( oState );
 
 
 %% Discrete-time loop
@@ -293,6 +295,7 @@ k = 1;
 while( 1 )
     
     t1 = tic;
+    oJoy = jread( oJoy );
     
     
     %% State machine
@@ -311,9 +314,14 @@ while( 1 )
 
     % take off command
     
+    if oNavigation.x(3)>(htakeoff-0.05) && oState.state == oState.TAKEOFF, oState.event = oState.TAKEOFF_END; end    
+    
     if oJoy.b(3), oState.event = oState.TAKEOFF_CMD; end
+     
     
     % land command
+          
+    if oMav.r(3) < 0.01 && oState.state == oState.LANDING, oState.event = oState.LAND_END; end
     
     if oJoy.b(4), oState.event = oState.LAND_CMD; end
     
@@ -323,11 +331,8 @@ while( 1 )
     
     % end of states (events)
     
-    if oState.dt == 3 && oState.state == TAKEOFF, oState.event = oState.TAKEOFF_END; end    
-    
-    if oState.dt == 5 && oState.state == LANDING, oState.event = oState.LAND_END; end
-    
-    if norm(oJoy.a) > 0.1, oState.event = oState.WAYPOINT_END; end
+   
+    if norm(oJoy.a) > 0.1 && oState.state == oState.WAYPOINT, oState.event = oState.WAYPOINT_END; end
     
        
     oState = StateTransition( oState );
@@ -346,16 +351,13 @@ while( 1 )
     
     if oState.state == oState.MANUAL 
         
-        oJoy = jread( oJoy );
         oJoy = jcommand( oJoy );
         
         % Commands to the flight controllers 
         
-        oControl.v_   =  [0,0,oJoy.vz]'; 
-        oControl.cax  =  oJoy.vx;
-        oControl.cay  =  oJoy.vy; 
+        oControl.v_   =  [oJoy.vx,oJoy.vy,oJoy.vz]'; 
         oControl.wz_  =  oJoy.wz;
-        oControl.r_   =  zeros(3,1);
+        oControl.r_   =  oControl.r_ + oControl.v_*Ts;
         oControl.p_   =  oControl.p_ + oControl.wz_*Ts;
         
     end
@@ -450,18 +452,11 @@ while( 1 )
     
  
     % Attitude command computation
-    
-    if oState.state == oState.TAKEOFF || ...
-       oState.state == oState.LANDING || ...
-       oState.state == oState.WAYPOINT 
         
-        oControl = ATC( oControl );
     
-    elseif oState.state == oState.MANUAL
+    oControl = ATC( oControl );
     
-        oControl = ATCman( oControl );
-    
-    end
+ 
     
     
     % Attitude control law
