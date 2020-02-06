@@ -63,65 +63,31 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Realistic Drone\Drone\Level0_Stabilizing\PID.cs" />
-    <Compile Include="Assets\Realistic Drone\Drone\Level0_Stabilizing\droneMovementController.cs" />
-    <Compile Include="Assets\Realistic Drone\Drone\Level0_Stabilizing\droneSettings.cs" />
-    <Compile Include="Assets\Realistic Drone\Drone\Level0_Stabilizing\optimizations\OptimizationBehaviour.cs" />
-    <Compile Include="Assets\Realistic Drone\Drone\Level0_Stabilizing\optimizations\OptimizationManager.cs" />
-    <Compile Include="Assets\Realistic Drone\Drone\Level0_Stabilizing\optimizations\geneticOptimization\GAmanager.cs" />
-    <Compile Include="Assets\Realistic Drone\Drone\Level0_Stabilizing\optimizations\geneticOptimization\GeneticSettings.cs" />
-    <Compile Include="Assets\Realistic Drone\Drone\Level0_Stabilizing\optimizations\geneticOptimization\geneticBehaviour.cs" />
-    <Compile Include="Assets\Realistic Drone\Drone\Level0_Stabilizing\optimizations\twidOptimization\twiddleBehaviour.cs" />
-    <Compile Include="Assets\Realistic Drone\Drone\Level0_Stabilizing\optimizations\twidOptimization\twiddleManager.cs" />
-    <Compile Include="Assets\Realistic Drone\Drone\Level0_Stabilizing\optimizations\twidOptimization\twiddleSettings.cs" />
-    <Compile Include="Assets\Realistic Drone\Drone\Level0_Stabilizing\rotor.cs" />
-    <Compile Include="Assets\Realistic Drone\Drone\Level0_Stabilizing\sensors\Accelerometer.cs" />
-    <Compile Include="Assets\Realistic Drone\Drone\Level0_Stabilizing\sensors\Barometer.cs" />
-    <Compile Include="Assets\Realistic Drone\Drone\Level0_Stabilizing\sensors\GPS.cs" />
-    <Compile Include="Assets\Realistic Drone\Drone\Level0_Stabilizing\sensors\Gyro.cs" />
-    <Compile Include="Assets\Realistic Drone\Drone\Level0_Stabilizing\sensors\Magnetometer.cs" />
-    <Compile Include="Assets\Realistic Drone\Drone\Level0_Stabilizing\sensors\noiseAddVector3.cs" />
-    <Compile Include="Assets\Realistic Drone\Drone\Level0_Stabilizing\sensors\noiseAdder.cs" />
-    <Compile Include="Assets\Realistic Drone\Drone\Level1_Trajectories\Waypoint.cs" />
-    <Compile Include="Assets\Realistic Drone\Drone\Level1_Trajectories\WaypointCircuit.cs" />
-    <Compile Include="Assets\Realistic Drone\Drone\Level1_Trajectories\WaypointProgressTracker.cs" />
-    <Compile Include="Assets\Realistic Drone\Drone\Level1_Trajectories\singlePoint.cs" />
-    <Compile Include="Assets\Realistic Drone\Drone\Level2_IA\IA.cs" />
-    <Compile Include="Assets\Realistic Drone\Drone\Level2_IA\maze\dataCollector.cs" />
-    <Compile Include="Assets\Realistic Drone\Drone\Level2_IA\maze\drawing\dataDrawer.cs" />
-    <Compile Include="Assets\Realistic Drone\Drone\Level2_IA\maze\mazeExplorer.cs" />
-    <Compile Include="Assets\Realistic Drone\Drone\Tools\configReader.cs" />
-    <Compile Include="Assets\Realistic Drone\Drone\Tools\dataReader.cs" />
-    <Compile Include="Assets\Realistic Drone\Drone\Tools\dataSaver.cs" />
-    <Compile Include="Assets\Realistic Drone\Drone\Tools\lineDrawer.cs" />
-    <Compile Include="Assets\Realistic Drone\cameraBehaviour.cs" />
-    <Compile Include="Assets\Realistic Drone\lookAt.cs" />
-    <Compile Include="Assets\Realistic Drone\screen.cs" />
     <Compile Include="Assets\Scripts\Cam2Drone.cs" />
     <Compile Include="Assets\Scripts\DroneControl.cs" />
     <Compile Include="Assets\Scripts\PropellerControl.cs" />
     <Compile Include="Assets\Scripts\TEXT.cs" />
     <None Include="Assets\Realistic Drone\README.txt" />
     <Reference Include="Unity.Timeline.Editor">
-      <HintPath>C:/Users/davia/OneDrive/Desktop/Projetos/MATLABMAVSim/MATLABMAVSim/UNITY3D/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+      <HintPath>C:/Users/davia/OneDrive/Desktop/Projetos/MATLABMAVSim/MAVSim-MATLAB/UNITY3D/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VSCode.Editor">
-      <HintPath>C:/Users/davia/OneDrive/Desktop/Projetos/MATLABMAVSim/MATLABMAVSim/UNITY3D/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
+      <HintPath>C:/Users/davia/OneDrive/Desktop/Projetos/MATLABMAVSim/MAVSim-MATLAB/UNITY3D/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>C:/Users/davia/OneDrive/Desktop/Projetos/MATLABMAVSim/MATLABMAVSim/UNITY3D/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+      <HintPath>C:/Users/davia/OneDrive/Desktop/Projetos/MATLABMAVSim/MAVSim-MATLAB/UNITY3D/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline">
-      <HintPath>C:/Users/davia/OneDrive/Desktop/Projetos/MATLABMAVSim/MATLABMAVSim/UNITY3D/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
+      <HintPath>C:/Users/davia/OneDrive/Desktop/Projetos/MATLABMAVSim/MAVSim-MATLAB/UNITY3D/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
     </Reference>
     <Reference Include="Unity.CollabProxy.Editor">
-      <HintPath>C:/Users/davia/OneDrive/Desktop/Projetos/MATLABMAVSim/MATLABMAVSim/UNITY3D/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+      <HintPath>C:/Users/davia/OneDrive/Desktop/Projetos/MATLABMAVSim/MAVSim-MATLAB/UNITY3D/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Rider.Editor">
-      <HintPath>C:/Users/davia/OneDrive/Desktop/Projetos/MATLABMAVSim/MATLABMAVSim/UNITY3D/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
+      <HintPath>C:/Users/davia/OneDrive/Desktop/Projetos/MATLABMAVSim/MAVSim-MATLAB/UNITY3D/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
-      <HintPath>C:/Users/davia/OneDrive/Desktop/Projetos/MATLABMAVSim/MATLABMAVSim/UNITY3D/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+      <HintPath>C:/Users/davia/OneDrive/Desktop/Projetos/MATLABMAVSim/MAVSim-MATLAB/UNITY3D/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.3.0f6/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>

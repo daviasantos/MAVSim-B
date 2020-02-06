@@ -28,8 +28,6 @@ public class DroneControl : MonoBehaviour
         dronePos = origin;
         droneAtt = origin;
 
-        //sound = gameObject.audio.Find("sound_");
-
         mut = new Mutex();
         runServer = true;
         serverListener = new Task(ReceiveData); 
@@ -50,6 +48,13 @@ public class DroneControl : MonoBehaviour
     public AudioSource sound;
     void Sound() 
     {
+        if (Power == 1f){
+
+            sound.volume = 1;
+        }else {
+
+            sound.volume = 0;
+        }
 
     }
 

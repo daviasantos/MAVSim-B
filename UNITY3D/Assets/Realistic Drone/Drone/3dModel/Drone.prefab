@@ -674,7 +674,7 @@ GameObject:
   - component: {fileID: 3351520}
   - component: {fileID: 2365886}
   - component: {fileID: 12000692}
-  - component: {fileID: 11416162}
+  - component: {fileID: 4580273087949919981}
   m_Layer: 0
   m_Name: helixV1
   m_TagString: Untagged
@@ -849,21 +849,20 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 0
   m_Loop: 0
---- !u!114 &11416162
+--- !u!114 &4580273087949919981
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 123350}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94a13467f229d7a4c80c3ae28f1e1356, type: 3}
+  m_Script: {fileID: 11500000, guid: 28bf6b73f8161bf43958ef841f05abba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  power: 10
-  counterclockwise: 0
-  animationActivated: 0
+  Drone: {fileID: 193520}
+  power: {fileID: 0}
 --- !u!1 &123904
 GameObject:
   m_ObjectHideFlags: 0
@@ -1604,7 +1603,7 @@ GameObject:
   - component: {fileID: 3323540}
   - component: {fileID: 2335288}
   - component: {fileID: 12010812}
-  - component: {fileID: 11475168}
+  - component: {fileID: 8057747650578201520}
   m_Layer: 0
   m_Name: helixV2
   m_TagString: Untagged
@@ -1779,21 +1778,20 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 0
   m_Loop: 0
---- !u!114 &11475168
+--- !u!114 &8057747650578201520
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 156402}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94a13467f229d7a4c80c3ae28f1e1356, type: 3}
+  m_Script: {fileID: 11500000, guid: 28bf6b73f8161bf43958ef841f05abba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  power: 10
-  counterclockwise: 0
-  animationActivated: 0
+  Drone: {fileID: 193520}
+  power: {fileID: 0}
 --- !u!1 &161998
 GameObject:
   m_ObjectHideFlags: 0
@@ -2044,7 +2042,7 @@ GameObject:
   - component: {fileID: 3347148}
   - component: {fileID: 2368422}
   - component: {fileID: 12016214}
-  - component: {fileID: 11459510}
+  - component: {fileID: 5242945996030143656}
   m_Layer: 0
   m_Name: helixO1
   m_TagString: Untagged
@@ -2219,21 +2217,20 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 0
   m_Loop: 0
---- !u!114 &11459510
+--- !u!114 &5242945996030143656
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 171356}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94a13467f229d7a4c80c3ae28f1e1356, type: 3}
+  m_Script: {fileID: 11500000, guid: 28bf6b73f8161bf43958ef841f05abba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  power: 10
-  counterclockwise: 0
-  animationActivated: 0
+  Drone: {fileID: 193520}
+  power: {fileID: 0}
 --- !u!1 &173184
 GameObject:
   m_ObjectHideFlags: 0
@@ -2580,7 +2577,7 @@ GameObject:
   - component: {fileID: 3305966}
   - component: {fileID: 2364560}
   - component: {fileID: 12019422}
-  - component: {fileID: 11467990}
+  - component: {fileID: 824203564796509269}
   m_Layer: 0
   m_Name: helixO2
   m_TagString: Untagged
@@ -2755,21 +2752,20 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 0
   m_Loop: 0
---- !u!114 &11467990
+--- !u!114 &824203564796509269
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 184200}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94a13467f229d7a4c80c3ae28f1e1356, type: 3}
+  m_Script: {fileID: 11500000, guid: 28bf6b73f8161bf43958ef841f05abba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  power: 10
-  counterclockwise: 0
-  animationActivated: 0
+  Drone: {fileID: 193520}
+  power: {fileID: 0}
 --- !u!1 &185630
 GameObject:
   m_ObjectHideFlags: 0
