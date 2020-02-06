@@ -9,7 +9,7 @@ public class TEXT : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        t.text = dr.transform.position.ToString("0.00");
-        
+        //
+        t.text = "Position: " + dr.transform.position.ToString("0.00") + "\nRotation: " + dr.transform.rotation.eulerAngles.ToString("0.00");
     }
 }

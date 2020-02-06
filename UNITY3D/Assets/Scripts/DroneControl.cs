@@ -22,11 +22,13 @@ public class DroneControl : MonoBehaviour
     TcpListener server;
 
     // Start is called before the first frame update 
-    void Start()
+    void Awake()
     {
         Vector3 origin = new Vector3(0, 0, 0); 
         dronePos = origin;
         droneAtt = origin;
+
+        //sound = gameObject.audio.Find("sound_");
 
         mut = new Mutex();
         runServer = true;
@@ -40,10 +42,15 @@ public class DroneControl : MonoBehaviour
     void FixedUpdate()
     {
         mut.WaitOne();
-
+        Sound();
         transform.position = dronePos;
         transform.eulerAngles = droneAtt;
         mut.ReleaseMutex(); 
+    }
+    public AudioSource sound;
+    void Sound() 
+    {
+
     }
 
     private void OnDestroy()
