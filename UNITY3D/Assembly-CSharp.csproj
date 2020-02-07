@@ -64,7 +64,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Cam2Drone.cs" />
+    <Compile Include="Assets\Scripts\Console.cs" />
     <Compile Include="Assets\Scripts\DroneControl.cs" />
+    <Compile Include="Assets\Scripts\Hit.cs" />
+    <Compile Include="Assets\Scripts\MyLog.cs" />
     <Compile Include="Assets\Scripts\PropellerControl.cs" />
     <Compile Include="Assets\Scripts\TEXT.cs" />
     <None Include="Assets\Realistic Drone\README.txt" />

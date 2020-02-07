@@ -3061,6 +3061,7 @@ GameObject:
   - component: {fileID: 6505240}
   - component: {fileID: 194261237004420608}
   - component: {fileID: 12019164}
+  - component: {fileID: 8760048662324109509}
   m_Layer: 0
   m_Name: Drone
   m_TagString: Player
@@ -3241,6 +3242,21 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 0
   m_Loop: 0
+--- !u!114 &8760048662324109509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 193520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2941dba5c5126b645b5de1f16ac824ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  body: {fileID: 194261237004420608}
+  Power: 0
+  sound: {fileID: 2497236143452606519}
 --- !u!1 &195556
 GameObject:
   m_ObjectHideFlags: 0

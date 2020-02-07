@@ -12,7 +12,7 @@ public class DroneControl : MonoBehaviour
     Vector3 dronePos, droneAtt;
 
     static Mutex mut;
-
+    public Rigidbody body;
     private bool runServer = false;
 
     public float Power;
@@ -36,24 +36,29 @@ public class DroneControl : MonoBehaviour
     }
 
 
-    // Update is called once per frame
+    
     void FixedUpdate()
     {
         mut.WaitOne();
         Sound();
         transform.position = dronePos;
         transform.eulerAngles = droneAtt;
-        mut.ReleaseMutex(); 
+        mut.ReleaseMutex();
+
     }
+
     public AudioSource sound;
+
     void Sound() 
     {
         if (Power == 1f){
 
             sound.volume = 1;
+            body.useGravity = false;
         }else {
 
             sound.volume = 0;
+            body.useGravity = true;
         }
 
     }
@@ -70,7 +75,6 @@ public class DroneControl : MonoBehaviour
             print("Server was not working!!!!");
         }
     }
-
 
     //  Function to receive TCP data.
     public void ReceiveData()
@@ -105,14 +109,11 @@ public class DroneControl : MonoBehaviour
             {
                 try
                 {
-
                     n = stream.Read(rawData, 0, rawData.Length);
 
                     //if (n > 0 && n < rawData.Length)
                     //    continue;
-
                     Buffer.BlockCopy(rawData, 0, data, 0, n);
-                    print(n);
                     if (n == 28)
                     {
                         Vector3 pos = new Vector3(0, 0, 0);
@@ -120,14 +121,13 @@ public class DroneControl : MonoBehaviour
 
                         Power = data[6];
 
-                        pos.x = data[0];
+                        pos.x = -data[1];
                         pos.y = data[2];
-                        pos.z = data[1];
+                        pos.z = data[0];
 
-
-                        att.x = -data[3];
-                        att.y = -data[5];
-                        att.z = -data[4];
+                        att.x = data[4];
+                        att.y = data[5];
+                        att.z = -data[3];
 
                         mut.WaitOne();
 
@@ -135,8 +135,6 @@ public class DroneControl : MonoBehaviour
                         droneAtt = att;
 
                         mut.ReleaseMutex();
-                        print(Power);
-                        print(pos.ToString() + "; " + att.ToString());
 
                         //cont[0]++;
 
