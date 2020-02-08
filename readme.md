@@ -1,5 +1,5 @@
 ---------------------------------------------------------------------------
-MATLABMAVSim: Simulation of an MAV dynamics & flight control 
+# MATLABMAVSim: Simulation of an MAV dynamics & flight control 
 ---------------------------------------------------------------------------
 Objetive: to serve as a simulator for people who are interested to do 
 research and development on aerial robotics.
