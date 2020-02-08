@@ -34,9 +34,9 @@ classdef CControl
         Fmax            % maximum force
         zetamin         % minimum virtual thrust
         zetamax         % maximum virtual thrust
-        tau             % time const ref filter v_
+        tau             % time const ref filter v_/wz_
         Ts              % sampling time
-        alpha           % coeff ref filter v_
+        alpha           % coeff ref filter v_/wz_
         
         % External variables
         
@@ -47,6 +47,7 @@ classdef CControl
         r_               % position command 
         v_               % velocity command
         vcheck           % output of ref filter of v_
+        wzcheck          % output of ref filter of wz_
         p_               % heading command 
         wz_              % heading rate command 
         w_               % speed commands
@@ -114,6 +115,7 @@ classdef CControl
             obj.TB_ = zeros(3,1);
             obj.FG_ = zeros(3,1);
             obj.vcheck = zeros(3,1);
+            obj.wzcheck = 0;
             
             
             % Pre-computation
@@ -136,11 +138,19 @@ classdef CControl
         
         %% Position control
         
-        function obj = PC( obj )
+        function obj = PC( obj, mode )
+            
+            % Choose filtered ref in manual mode
+            
+            if ~mode 
+                vaux_ = obj.vcheck;
+            else
+                vaux_ = obj.v_;
+            end
             
             % Control law ifself
             
-            obj.FG_ = obj.m*( obj.g*obj.e3 + obj.K3*(obj.r_-obj.r) + obj.K4*(obj.v_-obj.v) );
+            obj.FG_ = obj.m*( obj.g*obj.e3 + obj.K3*(obj.r_-obj.r) + obj.K4*(vaux_-obj.v) );
             obj.FG_ = sat( obj.FG_, obj.Fmin, obj.Fmax );
            
             
@@ -157,10 +167,6 @@ classdef CControl
         
         function obj = VC( obj )
    
-            % Reference filter
-            
-            obj.vcheck = obj.alpha*obj.vcheck + (1-obj.alpha)*obj.v_;
-            
             % Control law ifself
             
             obj.FG_ = obj.m*( obj.g*obj.e3 + obj.Kc*(obj.vcheck-obj.v) );
@@ -175,10 +181,29 @@ classdef CControl
         end
         
         
+        %% PB reference filter for manual mode 
+        
+        
+        function obj = PBRefFilter( obj )
+   
+            obj.vcheck  = obj.alpha*obj.vcheck + (1-obj.alpha)*obj.v_;
+            obj.wzcheck = obj.alpha*obj.wzcheck + (1-obj.alpha)*obj.wz_;
+        
+        end
+        
+        
         %% Attitude control
         
-        function obj = AC( obj )
+        function obj = AC( obj, mode )
 
+            % Choose filtered ref in manual mode
+            
+            if ~mode 
+                wzaux_ = obj.wzcheck;
+            else
+                wzaux_ = obj.wz_;
+            end
+            
             % Attitude error
             
             obj.ea = D2a( obj.D_*obj.D' );
@@ -187,7 +212,7 @@ classdef CControl
             %  Control law itself
 
             obj.TB_ = cruz(obj.W)*( obj.JB*obj.W ) + ... 
-                  obj.JB*( obj.K1*obj.ea + obj.K2*([0 0 obj.wz_]'-obj.W) );
+                  obj.JB*( obj.K1*obj.ea + obj.K2*([0 0 wzaux_]'-obj.W) );
             obj.TB_ = sat( obj.TB_, obj.Tmin, obj.Tmax );    
             
    

@@ -42,7 +42,7 @@ public class DroneControl : MonoBehaviour
         mut.WaitOne();
         Sound();
         transform.position = dronePos;
-        transform.eulerAngles = droneAtt;
+        transform.localEulerAngles = droneAtt;
         mut.ReleaseMutex();
 
     }
@@ -125,9 +125,9 @@ public class DroneControl : MonoBehaviour
                         pos.y = data[2];
                         pos.z = data[0];
 
-                        att.x = data[4];
-                        att.y = data[5];
-                        att.z = -data[3];
+                        att.x = -data[4];
+                        att.y = -data[5];
+                        att.z = data[3];
 
                         mut.WaitOne();
 

@@ -10,7 +10,6 @@
 
 %% Add to path
 
-addpath('Plots');
 addpath('Classes');
 addpath('Conversions');
 
@@ -146,7 +145,7 @@ sControl.p_      = 0;
 sControl.wz_     = 0;
 sControl.w_      = zeros(nr,1);
 sControl.D_      = eye(3);
-sControl.tau     = tau_ref_filter_v_;
+sControl.tau     = tau_ref_filter;
 sControl.Ts      = Ts;
 
 oControl = CControl( sControl );
@@ -207,7 +206,8 @@ oState = CState;
 %% Initial interface
 
 disp('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
-disp('MATLABMAVSim: SIMULATION OF AN MAV - DYNAMICS AND FLIGHT CONTROL');
+disp('MAVSim: SIMULATION OF FLIGHT DYNAMICS AND CONTROL OF MAVS');
+disp('Version: MATLAB/Unity3D');
 disp(' ');
 disp('Description: Pure MATLAB simulation including:'); 
 disp(' ');
@@ -219,7 +219,7 @@ disp('             - attitude estimation (using mag, acc, gyro) and gps');
 disp('             - manual and auto modes');
 disp(' ');
 disp('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
-disp('Author: Prof Dr Davi A. Santos');
+disp('Author: Davi A. Santos (davists@ita.br)');
 disp('Institution: Aeronautics Institute of Technology (ITA/Brazil)');
 disp('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
 disp(' ');
@@ -288,9 +288,7 @@ oState = StateTransition( oState );
 
 %% Discrete-time loop
 
-% Initialize time index for plotting
-
-k = 1;  
+ k=1;
 
 while( 1 )
     
@@ -357,8 +355,13 @@ while( 1 )
         
         oControl.v_   =  [oJoy.vx,oJoy.vy,oJoy.vz]'; 
         oControl.wz_  =  oJoy.wz;
-        oControl.r_   =  oControl.r_ + oControl.v_*Ts;
-        oControl.p_   =  oControl.p_ + oControl.wz_*Ts;
+        
+        oControl = PBRefFilter ( oControl );
+        
+        oControl.r_   =  oControl.r_ + oControl.vcheck*Ts;
+        oControl.p_   =  oControl.p_ + oControl.wzcheck*Ts;
+        
+        
         
     end
         
@@ -404,7 +407,7 @@ while( 1 )
     if oState.state == oState.TAKEOFF
          
         oControl.r_(3) = htakeoff;
-        oControl.v_    = zeros(3,1);
+        oControl.v_    = [0 0 1]';
         oControl.wz_   = 0;
         
         
@@ -415,12 +418,11 @@ while( 1 )
     if oState.state == oState.LANDING
          
         oControl.r_(3) = 0;
-        oControl.v_    = zeros(3,1);
+        oControl.v_    = [0 0 -0.5]';
         oControl.wz_   = 0;
     
     end
     
- 
     
     %% Flight control
     
@@ -439,14 +441,11 @@ while( 1 )
        oState.state == oState.LANDING || ...
        oState.state == oState.WAYPOINT 
         
-        oControl = PC( oControl );
-    
-    
-    % Velocity control law
+        oControl = PC( oControl, 1 );
     
     elseif oState.state == oState.MANUAL
         
-        oControl = VC( oControl );
+        oControl = PC( oControl, 0 );
     
     end
     
@@ -456,12 +455,24 @@ while( 1 )
     
     oControl = ATC( oControl );
     
- 
-    
     
     % Attitude control law
     
-    oControl = AC( oControl );
+    
+    if oState.state == oState.TAKEOFF || ...
+       oState.state == oState.LANDING || ...
+       oState.state == oState.WAYPOINT 
+   
+   
+        oControl = AC( oControl, 1 );
+        
+        
+    elseif oState.state == oState.MANUAL
+    
+        oControl = AC( oControl, 0 );
+        
+    end
+    
     
     % Control allocation algorithm
     
@@ -558,7 +569,7 @@ while( 1 )
     % Initialize data members with true pose and power
     
     oData.r = oMav.r;
-    oData.a = 180/pi*D2a( oMav.D );
+    oData.a = 180/pi*D2a( oMav.D' );
     
     if oState.state == oState.READY
         oData.power = 0; 
@@ -572,50 +583,17 @@ while( 1 )
     oData               = PackUnity( oData );
     oSocket_unity.m_out = oData.m_out_unity;
     swrite( oSocket_unity );
-    
-    
-    
-    %% Monitoring 
-    
-    % Estimates
-    
-    red(:,k)  = oNavigation.x(1:3);
-    ved(:,k)  = oNavigation.x(4:6);
-    baed(:,k) = oNavigation.x(7:9);
-    bged(:,k) = oNavigation.x(14:16);
-    aed(:,k)  = 180/pi*D2a( q2D( oNavigation.x(10:13) ) );
-  
-    
-    % True states
-    
-    rd(:,k)   = oMav.r; 
-    vd(:,k)   = oMav.v;
-    Wd(:,k)   = oMav.W;
-    ad(:,k)   = 180/pi*D2a( oMav.D );
-    
-    % commands 
-    
-    rd_(:,k)  = oControl.r_;
-    ad_(:,k)  = 180/pi*D2a( oControl.D_ );
-    FGd(:,k)  = oControl.FG_;
-    TBd(:,k)  = oControl.TB_;
-    
+   
+    ad(:,k) = oData.a;
+    k = k+1;
     
     %% Waiting for sampling instant
     
     t2 = toc(t1);
     dt = uint64(1000*(Ts-t2)); 
     java.lang.Thread.sleep(dt);
+
     
-    
-    %% Update time index (just for plotting)
-    
-    k = k + 1;
-    if k == tf/Ts
-        break;
-    end
-    
-      
 end 
 
 
@@ -627,44 +605,6 @@ disp(' ');
 disp(tend);
     
 
-%% Plots
-
-disp('Plotting...');
-disp(' ');
-
-t = 2*Ts:Ts:tf;
-
-% position vs position command
-
-plot1c(t,rd(1,:)','$r_1$',rd_(1,:)','$\bar{r}_1$');
-plot1c(t,rd(2,:)','$r_2$',rd_(2,:)','$\bar{r}_2$');
-plot1c(t,rd(3,:)','$r_3$',rd_(3,:)','$\bar{r}_3$');
-
-% attitude vs attitude command
-
-plot1c(t,ad(1,:)','$a_1$',ad_(1,:)','$\bar{a}_1$');
-plot1c(t,ad(2,:)','$a_2$',ad_(2,:)','$\bar{a}_2$');
-plot1c(t,ad(3,:)','$a_3$',ad_(3,:)','$\bar{a}_3$');
-
-
-% force command 
-
-plot3c(t,FGd','$F_1$','$F_2$','$F_3$');
-
-
-% torque command
-
-plot3c(t,TBd','$T_1$','$T_2$','$T_3$');
-
-
-% 3D trajectory
-
-plot3dc(rd,rd_,'Trajectory','Command');
- 
-   
-% for evaluating/tuning the filters
-
-plotEvalNavigation;
 
 
 

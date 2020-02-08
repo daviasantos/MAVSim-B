@@ -224,9 +224,7 @@ classdef CData
             
             end
             
-            
-
-    
+  
 
         end
         
@@ -244,12 +242,12 @@ classdef CData
 
         %% Unpack data received from Unity
         
-%         function obj = UnpackUnity ( obj )
-% 
-%             
-%             
-% 
-%         end
+        function obj = UnpackUnity ( obj )
+
+            
+            
+
+        end
         
         
         
