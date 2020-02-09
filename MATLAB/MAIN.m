@@ -584,8 +584,6 @@ while( 1 )
     oSocket_unity.m_out = oData.m_out_unity;
     swrite( oSocket_unity );
    
-    ad(:,k) = oData.a;
-    k = k+1;
     
     %% Waiting for sampling instant
     
