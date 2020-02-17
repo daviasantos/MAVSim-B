@@ -54,11 +54,11 @@ public class DroneControl : MonoBehaviour
         if (Power == 1f){
 
             sound.volume = 1;
-            body.useGravity = false;
+            //body.useGravity = false;
         }else {
 
             sound.volume = 0;
-            body.useGravity = true;
+            //body.useGravity = true;
         }
 
     }
