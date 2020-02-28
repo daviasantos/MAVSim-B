@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class Hit : MonoBehaviour {
 
-    private void OnTriggerEnter(Collider other){
-        Debug.Log("HIT DETECTED");
+    private void OnCollisionEnter(Collision on){
+        if (on.gameObject.name == "Cube")
+        {
+            Debug.Log("HIT DETECTED");
+        }
     }
 }

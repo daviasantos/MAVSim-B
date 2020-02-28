@@ -10,13 +10,12 @@ using UnityEngine;
 public class DroneControl : MonoBehaviour
 {
     Vector3 dronePos, droneAtt;
+    public float Power;
+    public float Mode;
 
     static Mutex mut;
     public Rigidbody body;
     private bool runServer = false;
-
-    public float Power;
-
 
     Task serverListener;
     TcpListener server;
@@ -34,8 +33,6 @@ public class DroneControl : MonoBehaviour
         serverListener.Start();
         
     }
-
-
     
     void FixedUpdate()
     {
@@ -54,11 +51,11 @@ public class DroneControl : MonoBehaviour
         if (Power == 1f){
 
             sound.volume = 1;
-            //body.useGravity = false;
+            // body.useGravity = false;
         }else {
 
             sound.volume = 0;
-            //body.useGravity = true;
+            // body.useGravity = true;
         }
 
     }
@@ -114,11 +111,12 @@ public class DroneControl : MonoBehaviour
                     //if (n > 0 && n < rawData.Length)
                     //    continue;
                     Buffer.BlockCopy(rawData, 0, data, 0, n);
-                    if (n == 28)
+                    if (n == 32)
                     {
                         Vector3 pos = new Vector3(0, 0, 0);
                         Vector3 att = new Vector3(0, 0, 0);
 
+                        Mode = data[7];
                         Power = data[6];
 
                         pos.x = -data[1];
