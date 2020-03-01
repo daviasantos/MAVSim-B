@@ -71,33 +71,33 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11336}
     - Class: 114
-      Script: {instanceID: 11580}
+      Script: {instanceID: 11582}
     - Class: 114
-      Script: {instanceID: 11770}
+      Script: {instanceID: 11600}
     - Class: 114
-      Script: {instanceID: 11798}
+      Script: {instanceID: 11774}
     - Class: 114
-      Script: {instanceID: 11876}
+      Script: {instanceID: 11802}
     - Class: 114
-      Script: {instanceID: 12182}
+      Script: {instanceID: 11880}
     - Class: 114
-      Script: {instanceID: 12384}
+      Script: {instanceID: 12186}
     - Class: 114
-      Script: {instanceID: 12398}
+      Script: {instanceID: 12388}
     - Class: 114
-      Script: {instanceID: 12634}
+      Script: {instanceID: 12402}
     - Class: 114
-      Script: {instanceID: 12660}
+      Script: {instanceID: 12638}
     - Class: 114
-      Script: {instanceID: 12792}
+      Script: {instanceID: 12664}
     - Class: 114
-      Script: {instanceID: 12824}
+      Script: {instanceID: 12796}
     - Class: 114
-      Script: {instanceID: 12936}
+      Script: {instanceID: 12828}
     - Class: 114
-      Script: {instanceID: 13036}
+      Script: {instanceID: 12940}
     - Class: 114
-      Script: {instanceID: 22202}
+      Script: {instanceID: 13040}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 120
@@ -239,6 +239,12 @@ ScriptsOnlyBuild:
     className: SignalAsset
   - hash:
       serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: MainMenu
+  - hash:
+      serializedVersion: 2
       Hash: 0dbc3be398b4869a5c8d0d8481ee402c
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
@@ -273,6 +279,12 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PropellerControl
+  - hash:
+      serializedVersion: 2
+      Hash: 6cb26c581f68daf91c961ca377025c5d
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Joystick
   - hash:
       serializedVersion: 2
       Hash: 4e9333594897a1fb8b136ad2eae996c7
@@ -777,19 +789,7 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: MainMenu
-  - hash:
-      serializedVersion: 2
-      Hash: 6cb26c581f68daf91c961ca377025c5d
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: Joystick
   platform: 19
   scenePathNames:
   - Assets/Scenes/DRONE.unity
-  playerPath: C:/Users/T-Gamer/Desktop/PROJETOS/UNITY3D.exe
+  playerPath: C:/Users/T-Gamer/Desktop/PROJETOS/MAVSim-B/UNITY3D.exe

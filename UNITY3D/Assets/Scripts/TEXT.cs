@@ -58,6 +58,6 @@ public class TEXT : MonoBehaviour
         }
 
         // Show in the Simulator screen: The Flight Mode selected and The current position of the Drone
-        t.text = "Flight Mode: " + Tag + "\n\nPosition: " + dr.transform.position.ToString("0.00") + "m" + "\n\nPress 'Esc' to show The Joystick's Commands \nand 'Q' to hide The Joystick's Commands";
+        t.text = "Flight Mode: " + Tag + "\n\nPosition: " + dr.transform.position.ToString("0.00") + "m" + "\n\nPress 'Esc' to show The Joystick Commands \nand 'Q' to hide The Joystick Commands";
     }
 }
