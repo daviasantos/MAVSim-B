@@ -1,11 +1,19 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% MATLABMAVSim: Simulation of an MAV dynamics & flight control 
+% MAVSim 1.0.0: Simulation of an MAV dynamics & flight control 
+% Mode B - SILS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Description: pure matlab simulation. This version has a simple navigation
-% algorithm (attitude determ. filter using mag, gyro, and acc + GPS). Here
-% one can select manual (Joystick) or auto mode. 
+% Description:  Pure MATLAB simulation including: 
+%
+%           - plant and environment physics
+%           - sensors
+%           - guidance
+%           - flight control laws
+%           - attitude estimation (using mag, acc, gyro) and gps
+%           - state machine
+%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Author: Davi A. Santos (ITA)
+% Author: Prof. Dr. Davi A. Santos (davists@ita.br)
+% Institution: Aeronautics Institute of Technology (ITA/Brazil)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% Add to path
@@ -27,7 +35,7 @@ tstart = tic;
 
 % Input parameters
 
-Parameters;
+load('Parameters.mat');
 
 
 % Object: TCP socket with unity computer 
@@ -207,7 +215,8 @@ oState = CState;
 
 disp('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
 disp('MAVSim: SIMULATION OF FLIGHT DYNAMICS AND CONTROL OF MAVS');
-disp('Version: MATLAB/Unity3D');
+disp('Version 1.0.0');
+disp('Mode B - SILS');
 disp(' ');
 disp('Description: Pure MATLAB simulation including:'); 
 disp(' ');
@@ -216,7 +225,7 @@ disp('             - sensors');
 disp('             - guidance');
 disp('             - flight control laws');
 disp('             - attitude estimation (using mag, acc, gyro) and gps');
-disp('             - manual and auto modes');
+disp('             - state machine');
 disp(' ');
 disp('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
 disp('Author: Davi A. Santos (davists@ita.br)');
@@ -288,7 +297,8 @@ oState = StateTransition( oState );
 
 %% Discrete-time loop
 
- k=1;
+k=1;
+oJoy.flag = 0;
 
 while( 1 )
     
@@ -361,6 +371,29 @@ while( 1 )
         oControl.r_   =  oControl.r_ + oControl.vcheck*Ts;
         oControl.p_   =  oControl.p_ + oControl.wzcheck*Ts;
         
+        if oControl.p_ > pi/2
+            
+            oJoy.flag = 1; 
+            oControl.wzcheck = 0;
+            
+        elseif oControl.p_ < -pi/2
+            
+            oJoy.flag = 2;
+            oControl.wzcheck = 0;
+            
+        else
+            
+            oJoy.flag = 0;
+        
+        end
+        
+        
+       
+        
+        
+           
+       
+       
         
         
     end
@@ -576,6 +609,8 @@ while( 1 )
     else
         oData.power = 1;
     end
+    
+    oData.state = oState.state;
     
     
     % Pack and write data to Unity 3D

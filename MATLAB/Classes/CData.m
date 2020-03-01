@@ -44,7 +44,12 @@ classdef CData
         
         r                 % position
         a                 % attitude
+        
+        % flags
+        
         power             % power on (if 1) or of (if 0)
+        state             % from state machine to Unity
+        
         
         % parameters
         
@@ -234,7 +239,7 @@ classdef CData
         
         function obj = PackUnity ( obj )
 
-            obj.m_out_unity = single([obj.r' obj.a' obj.power]);
+            obj.m_out_unity = single([obj.r' obj.a' obj.power obj.state]);
             
 
         end

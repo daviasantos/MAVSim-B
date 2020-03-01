@@ -208,7 +208,6 @@ classdef CControl
             
             obj.ea = D2a( obj.D_*obj.D' );
             
-           
             %  Control law itself
 
             obj.TB_ = cruz(obj.W)*( obj.JB*obj.W ) + ... 
@@ -225,10 +224,13 @@ classdef CControl
             
             % Convert from normal vector to phi-theta
             
-            phi   = -atan(obj.nG_(2)/obj.nG_(3));
+            phi   = -atan2(obj.nG_(2),obj.nG_(3));
             theta =  asin(obj.nG_(1));
+            
             psi   =  obj.p_;
             
+            
+               
             % Conversion to attitude matrix considering psi_      
             
             obj.D_ = a2D([phi theta psi]);

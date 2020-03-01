@@ -86,19 +86,28 @@ classdef CGuidance
         
             % store previous values
             
-            obj.v_  = obj.r_;
-            obj.wz_ = obj.p_;
+            v_pre  = obj.v_;
+            wz_pre = obj.wz_;
+            r_pre  = obj.r_;
+            p_pre  = obj.p_;
             
             % proportional law
             
             obj.r_ = -obj.Kpr*obj.r + ( obj.Kpr + eye(3) )*obj.wl(1:3,obj.l);
             obj.p_ = -obj.Kpp*obj.p + ( obj.Kpp + 1 )*obj.wl(4,obj.l);
             
+           
             % command derivatives
             
-            obj.v_  = (obj.r_ - obj.v_)/obj.Ts;
-            obj.wz_ = (obj.p_ - obj.wz_)/obj.Ts;
+            obj.v_  = (obj.r_ - r_pre)/obj.Ts;
+            if norm(obj.v_) > 10
+                obj.v_ = v_pre;
+            end
             
+            obj.wz_ = (obj.p_ - p_pre)/obj.Ts;
+            if abs(obj.wz_) > 10
+                obj.wz_ = wz_pre;
+            end
             
                 
         end

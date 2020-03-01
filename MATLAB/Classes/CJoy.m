@@ -21,6 +21,7 @@ classdef CJoy
         vymax          % maximum speed in y
         vzmax          % maximum speed in z
         wzmax          % maximum speed around z
+        flag           % saturation in p_
         
         
         
@@ -72,6 +73,13 @@ classdef CJoy
             obj.vz = -obj.vzmax*obj.a(2);                    
             obj.wz = -obj.wzmax*obj.b(7)+obj.wzmax*obj.b(8);  % in deg/s
        
+            if obj.flag == 1 && obj.wz > 0
+                obj.wz = 0;
+            end
+            
+            if obj.flag == 2 && obj.wz < 0
+                obj.wz = 0;
+            end
         
             % implement a dead zone
 
