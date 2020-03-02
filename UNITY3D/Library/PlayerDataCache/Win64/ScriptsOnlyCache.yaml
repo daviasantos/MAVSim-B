@@ -5,6 +5,7 @@ ScriptsOnlyBuild:
     - DroneControl
     - Hit
     - Joystick
+    - MainMenu
     - PropellerControl
     - TEXT
     Unity.Rider.Editor.dll:
@@ -22,8 +23,10 @@ ScriptsOnlyBuild:
     UnityEngine.UI.dll:
     - UnityEngine.EventSystems.EventSystem
     - UnityEngine.EventSystems.StandaloneInputModule
+    - UnityEngine.UI.Button
     - UnityEngine.UI.CanvasScaler
     - UnityEngine.UI.GraphicRaycaster
+    - UnityEngine.UI.Image
     - UnityEngine.UI.RawImage
     - UnityEngine.UI.Text
   sceneClasses:
@@ -46,8 +49,6 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 48
       Script: {instanceID: 0}
-    - Class: 49
-      Script: {instanceID: 0}
     - Class: 54
       Script: {instanceID: 0}
     - Class: 65
@@ -62,42 +63,30 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 108
       Script: {instanceID: 0}
-    - Class: 109
-      Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 11178}
+      Script: {instanceID: 11352}
     - Class: 114
-      Script: {instanceID: 11268}
+      Script: {instanceID: 11442}
     - Class: 114
-      Script: {instanceID: 11336}
+      Script: {instanceID: 11510}
     - Class: 114
-      Script: {instanceID: 11582}
-    - Class: 114
-      Script: {instanceID: 11600}
+      Script: {instanceID: 11756}
     - Class: 114
       Script: {instanceID: 11774}
     - Class: 114
-      Script: {instanceID: 11802}
+      Script: {instanceID: 11948}
     - Class: 114
-      Script: {instanceID: 11880}
+      Script: {instanceID: 12054}
     - Class: 114
-      Script: {instanceID: 12186}
+      Script: {instanceID: 12360}
     - Class: 114
-      Script: {instanceID: 12388}
+      Script: {instanceID: 12810}
     - Class: 114
-      Script: {instanceID: 12402}
+      Script: {instanceID: 12836}
     - Class: 114
-      Script: {instanceID: 12638}
+      Script: {instanceID: 12968}
     - Class: 114
-      Script: {instanceID: 12664}
-    - Class: 114
-      Script: {instanceID: 12796}
-    - Class: 114
-      Script: {instanceID: 12828}
-    - Class: 114
-      Script: {instanceID: 12940}
-    - Class: 114
-      Script: {instanceID: 13040}
+      Script: {instanceID: 13212}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 120
@@ -115,6 +104,71 @@ ScriptsOnlyBuild:
     - Class: 224
       Script: {instanceID: 0}
     - Class: 258
+      Script: {instanceID: 0}
+    Assets/Scenes/Menu.unity:
+    - Class: 1
+      Script: {instanceID: 0}
+    - Class: 4
+      Script: {instanceID: 0}
+    - Class: 20
+      Script: {instanceID: 0}
+    - Class: 21
+      Script: {instanceID: 0}
+    - Class: 28
+      Script: {instanceID: 0}
+    - Class: 48
+      Script: {instanceID: 0}
+    - Class: 49
+      Script: {instanceID: 0}
+    - Class: 81
+      Script: {instanceID: 0}
+    - Class: 104
+      Script: {instanceID: 0}
+    - Class: 108
+      Script: {instanceID: 0}
+    - Class: 109
+      Script: {instanceID: 0}
+    - Class: 114
+      Script: {instanceID: 11352}
+    - Class: 114
+      Script: {instanceID: 11510}
+    - Class: 114
+      Script: {instanceID: 11554}
+    - Class: 114
+      Script: {instanceID: 11658}
+    - Class: 114
+      Script: {instanceID: 11948}
+    - Class: 114
+      Script: {instanceID: 11976}
+    - Class: 114
+      Script: {instanceID: 12338}
+    - Class: 114
+      Script: {instanceID: 12562}
+    - Class: 114
+      Script: {instanceID: 12576}
+    - Class: 114
+      Script: {instanceID: 12836}
+    - Class: 114
+      Script: {instanceID: 13000}
+    - Class: 114
+      Script: {instanceID: 13112}
+    - Class: 114
+      Script: {instanceID: 13212}
+    - Class: 115
+      Script: {instanceID: 0}
+    - Class: 128
+      Script: {instanceID: 0}
+    - Class: 157
+      Script: {instanceID: 0}
+    - Class: 196
+      Script: {instanceID: 0}
+    - Class: 213
+      Script: {instanceID: 0}
+    - Class: 222
+      Script: {instanceID: 0}
+    - Class: 223
+      Script: {instanceID: 0}
+    - Class: 224
       Script: {instanceID: 0}
   scriptHashData:
   - hash:
@@ -791,5 +845,6 @@ ScriptsOnlyBuild:
     className: PlayableTrack
   platform: 19
   scenePathNames:
+  - Assets/Scenes/Menu.unity
   - Assets/Scenes/DRONE.unity
-  playerPath: C:/Users/T-Gamer/Desktop/PROJETOS/MAVSim-B/UNITY3D.exe
+  playerPath: C:/Users/davia/Documents/GitHub/MAVSim-B/UNITY3D/EXECUTAVEL/UNITY3D.exe

@@ -1042,7 +1042,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: MAVSim Copyright (C) 2020. Aeronautics Institute of Technology.
+  m_Text: MAVSim Copyright (C) 2020.  Aeronautics Institute of Technology.
 --- !u!222 &569643097
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1186,7 +1186,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: ...
+  m_Text: 
 --- !u!222 &655684458
 CanvasRenderer:
   m_ObjectHideFlags: 0
