@@ -8,6 +8,7 @@ public class Joystick : MonoBehaviour
     public GameObject image;
     public GameObject image2;
     public GameObject image3;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,17 +20,11 @@ public class Joystick : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            text.gameObject.SetActive(true);
-            image.gameObject.SetActive(true);
-            image2.gameObject.SetActive(true);
-            image3.gameObject.SetActive(true);
-        }
-        else if (Input.GetKeyDown(KeyCode.Q))
-        {
-            text.gameObject.SetActive(false);
-            image.gameObject.SetActive(false);
-            image2.gameObject.SetActive(false);
-            image3.gameObject.SetActive(false);
+            // Show and Hide the Help Screen
+            text.gameObject.SetActive(!text.gameObject.activeSelf);
+            image.gameObject.SetActive(!image.gameObject.activeSelf);
+            image2.gameObject.SetActive(!image2.gameObject.activeSelf);
+            image3.gameObject.SetActive(!image3.gameObject.activeSelf);
         }
     }
 }

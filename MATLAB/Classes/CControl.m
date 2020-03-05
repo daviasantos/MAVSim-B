@@ -1,3 +1,31 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%    MAVSim - Flight dynamics and control simulator for MAVs 
+%    Copyright (C) 2020  Aeronautics Institute of Technology
+%
+%    This program is free software: you can redistribute it and/or modify
+%    it under the terms of the GNU General Public License as published by
+%    the Free Software Foundation, either version 3 of the License, or
+%    (at your option) any later version.
+%
+%    This program is distributed in the hope that it will be useful,
+%    but WITHOUT ANY WARRANTY; without even the implied warranty of
+%    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+%    GNU General Public License for more details.
+%
+%    You should have received a copy of the GNU General Public License
+%    along with this program. If not, see <https://www.gnu.org/licenses/>.
+%
+%    Also add information on how to contact you by electronic and paper mail.
+%    To contact the author, please use the electronic address davists@ita.br or 
+%    send a letter to
+%    
+%    Prof. Dr. Davi Antonio dos Santos
+%    Divisao de Engenharia Mecanica
+%    Instituto Tecnologico de Aeronautica
+%    Praça Marechal Eduardo Gomes, 50, Vila das Acacias, 12228-900, Sao Jose dos Campos,
+%    SP, Brasil.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % CControl
 % Description: Flight control class. It implements the flight control laws,
@@ -22,8 +50,8 @@ classdef CControl
         m               % mass
         g               % gravity
         nr              % number of rotors
-        l1              % frontal arm
-        l2              % lateral arm
+        l               % arm length
+        delta           % frontal half angle
         kf              % force coefficient
         kt              % torque coefficient
         k               % kt/kf
@@ -90,8 +118,8 @@ classdef CControl
             obj.m       = sControl.m;
             obj.g       = sControl.g;
             obj.nr      = sControl.nr;
-            obj.l1      = sControl.l1;
-            obj.l2      = sControl.l2;
+            obj.l       = sControl.l;
+            obj.delta   = sControl.delta;
             obj.kf      = sControl.kf;
             obj.kt      = sControl.kt;
             obj.k       = sControl.k;
@@ -122,10 +150,10 @@ classdef CControl
             
             obj.e3 = [0;0;1];
             obj.k = obj.kt/obj.kf;
-            obj.Ginv = 0.25* [1 1/obj.l2 -1/obj.l1 1/obj.k;
-                              1 -1/obj.l2 -1/obj.l1 -1/obj.k;
-                              1 -1/obj.l2 1/obj.l1 1/obj.k;
-                              1 1/obj.l2 1/obj.l1 -1/obj.k];
+            obj.Ginv = 0.25* [1 1/(obj.l*sind(obj.delta)) -1/(obj.l*cosd(obj.delta)) 1/obj.k;
+                              1 -1/(obj.l*sind(obj.delta)) -1/(obj.l*cosd(obj.delta)) -1/obj.k;
+                              1 -1/(obj.l*sind(obj.delta)) 1/(obj.l*cosd(obj.delta)) 1/obj.k;
+                              1 1/(obj.l*sind(obj.delta)) 1/(obj.l*cosd(obj.delta)) -1/obj.k];
             
             obj.alpha = exp( -obj.Ts/obj.tau );
             

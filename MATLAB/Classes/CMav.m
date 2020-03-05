@@ -1,3 +1,31 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%    MAVSim - Flight dynamics and control simulator for MAVs 
+%    Copyright (C) 2020  Aeronautics Institute of Technology
+%
+%    This program is free software: you can redistribute it and/or modify
+%    it under the terms of the GNU General Public License as published by
+%    the Free Software Foundation, either version 3 of the License, or
+%    (at your option) any later version.
+%
+%    This program is distributed in the hope that it will be useful,
+%    but WITHOUT ANY WARRANTY; without even the implied warranty of
+%    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+%    GNU General Public License for more details.
+%
+%    You should have received a copy of the GNU General Public License
+%    along with this program. If not, see <https://www.gnu.org/licenses/>.
+%
+%    Also add information on how to contact you by electronic and paper mail.
+%    To contact the author, please use the electronic address davists@ita.br or 
+%    send a letter to
+%    
+%    Prof. Dr. Davi Antonio dos Santos
+%    Divisao de Engenharia Mecanica
+%    Instituto Tecnologico de Aeronautica
+%    Praça Marechal Eduardo Gomes, 50, Vila das Acacias, 12228-900, Sao Jose dos Campos,
+%    SP, Brasil.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % CMav
 % Description: MAV physics class. It implements the physics of the MAV under
@@ -20,8 +48,8 @@ classdef CMav
         fmax     % maximum thrust of a rotor
         km       % motor coefficient
         Tm       % motor time constant
-        l1       % longitudinal arm length
-        l2       % transverse arm length
+        l        % arm length
+        delta    % frontal half angle (zero for + config)
         m        % mass
         JB       % inertia matrix
         JBi      % JB inverse
@@ -80,8 +108,8 @@ classdef CMav
             obj.wmax = sMav.wmax;
             obj.km   = sMav.km;
             obj.Tm   = sMav.Tm;
-            obj.l1   = sMav.l1;
-            obj.l2   = sMav.l2;
+            obj.l    = sMav.l;
+            obj.delta= sMav.delta;
             obj.m    = sMav.m;
             obj.JB   = sMav.JB;
             obj.Jr   = sMav.Jr;
@@ -100,8 +128,8 @@ classdef CMav
             obj.fmax = obj.kf*obj.wmax^2;
             obj.k = obj.kt/obj.kf;
             obj.G = [1 1 1 1;
-                     obj.l2 -obj.l2 -obj.l2 obj.l2;
-                    -obj.l1 -obj.l1 obj.l1 obj.l1;
+                     obj.l*sind(obj.delta) -obj.l*sind(obj.delta) -obj.l*sind(obj.delta) obj.l*sind(obj.delta);
+                    -obj.l*cosd(obj.delta) -obj.l*cosd(obj.delta) obj.l*cosd(obj.delta) obj.l*cosd(obj.delta);
                      obj.k -obj.k obj.k -obj.k];      
             obj.JBi = inv( obj.JB );
             obj.f   = zeros(obj.nr,1);

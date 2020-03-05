@@ -21,43 +21,25 @@ public class TEXT : MonoBehaviour
 
         // Verify the Flight Mode of the Drone Controller
         if(mode.Mode == 1f)
-        {
             Tag = "OFF";
-        }
         else if (mode.Mode == 2f)
-        {
             Tag = "INIT";
-        }
         else if (mode.Mode == 3f)
-        {
             Tag = "READY";
-        }
         else if (mode.Mode == 4f)
-        {
             Tag = "ARMED";
-        }
         else if (mode.Mode == 5f)
-        {
             Tag = "TAKEOFF";
-        }
         else if (mode.Mode == 6f)
-        {
             Tag = "MANUAL";
-        }
         else if (mode.Mode == 7f)
-        {
             Tag = "WAYPOINT";
-        }
         else if (mode.Mode == 8f)
-        {
             Tag = "LANDING";
-        }
         else if (mode.Mode > 8f || mode.Mode < 1f)
-        {
             Tag = "...";
-        }
 
         // Show in the Simulator screen: The Flight Mode selected and The current position of the Drone
-        t.text = "MAVSim 1.0.0 \nFlight state: " + Tag + "\nPosition: " + dr.transform.position.ToString("0.0") + " m" + "\nPress 'Esc' to show the joystick commands \nand 'q' to hide them.";
+        t.text = "MAVSim 1.0.0\nFlight Mode: " + Tag + "\nPosition: " + dr.transform.position.ToString("0.00") + "m" + "\n\nPress 'Esc' to show or hide the Help Screen";
     }
 }

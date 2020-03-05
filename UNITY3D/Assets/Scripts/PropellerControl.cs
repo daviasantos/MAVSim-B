@@ -6,7 +6,7 @@ public class PropellerControl : MonoBehaviour
 {
     float omegaMax = 10000.0f;
     float omega = 0;
-    float omegaRate = 50.0f;
+    float omegaRate = 40.0f;
 
     public GameObject Drone;
 
@@ -27,7 +27,7 @@ public class PropellerControl : MonoBehaviour
             if (omega > omegaMax)
                 omega = omegaMax;
         }
-
+        Debug.Log(omega);
         if (power.Power == 1f)
             transform.Rotate(new Vector3(0.0f, 0.0f, omega) * Time.deltaTime);
         else
