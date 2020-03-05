@@ -60,7 +60,7 @@ public class DroneControl : MonoBehaviour
 
     }
 
-    private void OnDestroy()
+    public void OnDestroy()
     {
         runServer = false;
         try

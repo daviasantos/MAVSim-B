@@ -27,7 +27,7 @@ public class PropellerControl : MonoBehaviour
             if (omega > omegaMax)
                 omega = omegaMax;
         }
-        Debug.Log(omega);
+
         if (power.Power == 1f)
             transform.Rotate(new Vector3(0.0f, 0.0f, omega) * Time.deltaTime);
         else

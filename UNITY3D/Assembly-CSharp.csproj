@@ -68,6 +68,7 @@
     <Compile Include="Assets\Scripts\DroneControl.cs" />
     <Compile Include="Assets\Scripts\Hit.cs" />
     <Compile Include="Assets\Scripts\Joystick.cs" />
+    <Compile Include="Assets\Scripts\MainMenu.cs" />
     <Compile Include="Assets\Scripts\MyLog.cs" />
     <Compile Include="Assets\Scripts\PropellerControl.cs" />
     <Compile Include="Assets\Scripts\TEXT.cs" />
