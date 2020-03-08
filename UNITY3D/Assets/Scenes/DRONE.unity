@@ -302,7 +302,7 @@ GameObject:
   - component: {fileID: 178385930}
   - component: {fileID: 178385929}
   m_Layer: 5
-  m_Name: RawImage
+  m_Name: joy1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -777,12 +777,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b4941f04a664fe4882395e6efdf9c23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &366871693 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 442520, guid: 979fc5f838d46744aa26f426a3934492,
-    type: 3}
-  m_PrefabInstance: {fileID: 334256239}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &368799182
 GameObject:
   m_ObjectHideFlags: 0
@@ -872,7 +866,7 @@ GameObject:
   - component: {fileID: 394615666}
   - component: {fileID: 394615665}
   m_Layer: 5
-  m_Name: Text (2)
+  m_Name: Help sreen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1079,7 +1073,7 @@ GameObject:
   - component: {fileID: 539054593}
   - component: {fileID: 539054592}
   m_Layer: 5
-  m_Name: RawImage (2)
+  m_Name: joy3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1149,7 +1143,7 @@ GameObject:
   - component: {fileID: 569643097}
   - component: {fileID: 569643096}
   m_Layer: 5
-  m_Name: Text (1)
+  m_Name: Copyright
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1293,7 +1287,7 @@ GameObject:
   - component: {fileID: 655684457}
   - component: {fileID: 655684459}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Logs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1370,8 +1364,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bed3fc1c5cb0ce84fb5c1f7c9a2d509e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dr: {fileID: 366871693}
-  t: {fileID: 655684457}
+  Logs: {fileID: 655684457}
   Drone: {fileID: 366871688}
   mode: {fileID: 366871689}
   Tag: 
@@ -2078,7 +2071,7 @@ GameObject:
   - component: {fileID: 1111301699}
   - component: {fileID: 1111301698}
   m_Layer: 5
-  m_Name: RawImage (1)
+  m_Name: joy2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2258,7 +2251,7 @@ GameObject:
   - component: {fileID: 1297338228}
   - component: {fileID: 1297338227}
   m_Layer: 5
-  m_Name: Text (3)
+  m_Name: text help
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
